@@ -4,17 +4,24 @@ import type { Database } from '../types/database'
 
 type TableName = keyof Database['public']['Tables']
 
+export type BatchDeviceWithDevice = Database['public']['Tables']['batch_devices']['Row'] & {
+  devices: Pick<Database['public']['Tables']['devices']['Row'], 'serial' | 'model' | 'region'> | null
+}
+
 interface SupabaseQueryArgs {
   table: TableName
   method: 'select'
   match?: Record<string, string>
+  /** Supabase select column/embed string, e.g. '*, devices(serial, model, region)'. Defaults to '*'. */
+  columns?: string
 }
 
 const supabaseBaseQuery: BaseQueryFn<SupabaseQueryArgs, unknown, string> = async ({
   table,
   match,
+  columns = '*',
 }) => {
-  let query = supabase.from(table).select('*')
+  let query = supabase.from(table).select(columns)
   if (match) {
     for (const [column, value] of Object.entries(match)) {
       query = query.eq(column, value)
@@ -38,8 +45,13 @@ export const api = createApi({
       query: (rolloutId) => ({ table: 'batches', method: 'select', match: { rollout_id: rolloutId } }),
       providesTags: ['Batch'],
     }),
-    getBatchDevices: builder.query<Database['public']['Tables']['batch_devices']['Row'][], string>({
-      query: (batchId) => ({ table: 'batch_devices', method: 'select', match: { batch_id: batchId } }),
+    getBatchDevices: builder.query<BatchDeviceWithDevice[], string>({
+      query: (batchId) => ({
+        table: 'batch_devices',
+        method: 'select',
+        match: { batch_id: batchId },
+        columns: '*, devices(serial, model, region)',
+      }),
       providesTags: (_result, _error, batchId) => [{ type: 'BatchDevice', id: batchId }],
     }),
   }),
