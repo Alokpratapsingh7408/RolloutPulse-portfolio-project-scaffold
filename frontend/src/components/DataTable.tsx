@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import type { ReactNode } from 'react'
 import { EmptyState } from './EmptyState'
 import { Skeleton } from './Skeleton'
@@ -9,18 +10,32 @@ export interface DataTableColumn<T> {
   render: (row: T) => ReactNode
 }
 
+export type SortDirection = 'asc' | 'desc'
+
 export interface DataTableProps<T> {
   columns: DataTableColumn<T>[]
   rows: T[]
   rowKey: (row: T) => string
-  onSort?: (key: string) => void
+  onSort?: (key: string, direction: SortDirection) => void
   onRowClick?: (row: T) => void
   isLoading?: boolean
 }
 
 export function DataTable<T>({ columns, rows, rowKey, onSort, onRowClick, isLoading }: DataTableProps<T>) {
+  // DataTable owns which column/direction is active (and toggles it on
+  // repeated clicks); the caller just receives (key, direction) and re-sorts
+  // its rows - this is what TESTING.md means by "sort toggles asc/desc".
+  const [activeSort, setActiveSort] = useState<{ key: string; direction: SortDirection } | null>(null)
+
   if (isLoading) return <Skeleton rows={8} />
   if (rows.length === 0) return <EmptyState message="No data to show." />
+
+  function handleHeaderClick(key: string) {
+    const direction: SortDirection =
+      activeSort?.key === key && activeSort.direction === 'asc' ? 'desc' : 'asc'
+    setActiveSort({ key, direction })
+    onSort?.(key, direction)
+  }
 
   return (
     <>
@@ -33,10 +48,13 @@ export function DataTable<T>({ columns, rows, rowKey, onSort, onRowClick, isLoad
                 {column.sortable ? (
                   <button
                     type="button"
-                    onClick={() => onSort?.(column.key)}
+                    onClick={() => handleHeaderClick(column.key)}
                     className="flex items-center gap-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     {column.header}
+                    {activeSort?.key === column.key && (
+                      <span aria-hidden="true">{activeSort.direction === 'asc' ? '▲' : '▼'}</span>
+                    )}
                   </button>
                 ) : (
                   column.header

@@ -67,12 +67,8 @@ export function BatchDetailPage() {
     return sorted
   }, [batchDevices, filter, sort])
 
-  function handleSort(key: string) {
-    setSort((prev) =>
-      prev.key === key
-        ? { key: key as SortKey, direction: prev.direction === 'asc' ? 'desc' : 'asc' }
-        : { key: key as SortKey, direction: 'asc' },
-    )
+  function handleSort(key: string, direction: 'asc' | 'desc') {
+    setSort({ key: key as SortKey, direction })
   }
 
   const columns: DataTableColumn<BatchDeviceWithDevice>[] = [
