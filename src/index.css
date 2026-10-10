@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+  --color-status-pending: oklch(55.1% 0.027 264.4); /* gray */
+  --color-status-in_progress: oklch(54.6% 0.215 262.9); /* blue */
+  --color-status-success: oklch(52.7% 0.154 150.1); /* green */
+  --color-status-failed: oklch(50.5% 0.213 27.5); /* red */
+}
+
+body {
+  margin: 0;
+}
