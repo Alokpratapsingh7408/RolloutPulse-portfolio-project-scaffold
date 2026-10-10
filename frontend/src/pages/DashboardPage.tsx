@@ -1,26 +1,9 @@
-import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useGetRolloutsQuery } from '../store/api'
 import { supabase } from '../lib/supabase'
 
-interface Rollout {
-  id: string
-  name: string
-  status: string
-}
-
 export function DashboardPage() {
-  const [rollouts, setRollouts] = useState<Rollout[] | null>(null)
-  const [error, setError] = useState<string | null>(null)
-
-  useEffect(() => {
-    supabase
-      .from('rollouts')
-      .select('id, name, status')
-      .then(({ data, error }) => {
-        if (error) setError(error.message)
-        else setRollouts(data)
-      })
-  }, [])
+  const { data: rollouts, isLoading, isError } = useGetRolloutsQuery()
 
   async function handleSignOut() {
     await supabase.auth.signOut()
@@ -39,9 +22,9 @@ export function DashboardPage() {
         </button>
       </div>
 
-      {error && <p className="text-status-failed">{error}</p>}
-      {!error && rollouts === null && <p>Loading...</p>}
-      {rollouts?.length === 0 && <p>No rollouts yet.</p>}
+      {isLoading && <p>Loading...</p>}
+      {isError && <p className="text-status-failed">Couldn't load rollouts.</p>}
+      {!isLoading && !isError && rollouts?.length === 0 && <p>No rollouts yet.</p>}
 
       <ul className="space-y-2">
         {rollouts?.map((rollout) => (
