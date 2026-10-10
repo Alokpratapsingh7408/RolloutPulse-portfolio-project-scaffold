@@ -4,10 +4,10 @@ import type { Status } from './StatusPill'
 
 describe('StatusPill', () => {
   const cases: Array<{ status: Status; label: string; colorClass: string }> = [
-    { status: 'pending', label: 'Pending', colorClass: 'bg-gray-100' },
-    { status: 'in_progress', label: 'In progress', colorClass: 'bg-blue-100' },
-    { status: 'success', label: 'Success', colorClass: 'bg-green-100' },
-    { status: 'failed', label: 'Failed', colorClass: 'bg-red-100' },
+    { status: 'pending', label: 'Pending', colorClass: 'bg-slate-100' },
+    { status: 'in_progress', label: 'In progress', colorClass: 'bg-indigo-50' },
+    { status: 'success', label: 'Success', colorClass: 'bg-emerald-50' },
+    { status: 'failed', label: 'Failed', colorClass: 'bg-rose-50' },
   ]
 
   it.each(cases)('renders the correct text, icon, and color class for "%s"', ({ status, label, colorClass }) => {

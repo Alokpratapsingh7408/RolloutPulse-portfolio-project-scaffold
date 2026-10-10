@@ -37,16 +37,16 @@ export function FilterBar({ statusFilter, searchValue, onChange }: FilterBarProp
   }, [searchInput])
 
   return (
-    <div className="flex flex-wrap items-end gap-4">
+    <div className="flex flex-wrap items-end gap-4 rounded-xl border border-slate-200 bg-white p-4 shadow-sm">
       <div>
-        <label htmlFor="filter-status" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="filter-status" className="block text-xs font-semibold text-slate-500">
           Status
         </label>
         <select
           id="filter-status"
           value={statusFilter}
           onChange={(e) => onChange({ statusFilter: e.target.value as StatusFilter, searchValue: searchInput })}
-          className="mt-1 rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mt-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
         >
           {STATUS_OPTIONS.map((option) => (
             <option key={option} value={option}>
@@ -57,7 +57,7 @@ export function FilterBar({ statusFilter, searchValue, onChange }: FilterBarProp
       </div>
 
       <div>
-        <label htmlFor="filter-search" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="filter-search" className="block text-xs font-semibold text-slate-500">
           Search (serial, model, region)
         </label>
         <input
@@ -65,7 +65,7 @@ export function FilterBar({ statusFilter, searchValue, onChange }: FilterBarProp
           type="search"
           value={searchInput}
           onChange={(e) => setSearchInput(e.target.value)}
-          className="mt-1 rounded border border-gray-300 px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mt-1 rounded-lg border border-slate-300 px-3 py-2 text-sm text-slate-800 focus:outline-none focus:ring-2 focus:ring-brand-500"
         />
       </div>
     </div>

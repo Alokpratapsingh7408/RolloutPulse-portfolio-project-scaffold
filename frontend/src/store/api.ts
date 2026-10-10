@@ -41,8 +41,18 @@ export const api = createApi({
       query: () => ({ table: 'rollouts', method: 'select' }),
       providesTags: ['Rollout'],
     }),
+    getRolloutById: builder.query<Database['public']['Tables']['rollouts']['Row'] | undefined, string>({
+      query: (rolloutId) => ({ table: 'rollouts', method: 'select', match: { id: rolloutId } }),
+      transformResponse: (response: Database['public']['Tables']['rollouts']['Row'][]) => response[0],
+      providesTags: ['Rollout'],
+    }),
     getBatchesByRollout: builder.query<Database['public']['Tables']['batches']['Row'][], string>({
       query: (rolloutId) => ({ table: 'batches', method: 'select', match: { rollout_id: rolloutId } }),
+      providesTags: ['Batch'],
+    }),
+    getBatchById: builder.query<Database['public']['Tables']['batches']['Row'] | undefined, string>({
+      query: (batchId) => ({ table: 'batches', method: 'select', match: { id: batchId } }),
+      transformResponse: (response: Database['public']['Tables']['batches']['Row'][]) => response[0],
       providesTags: ['Batch'],
     }),
     getBatchDevices: builder.query<BatchDeviceWithDevice[], string>({
@@ -57,4 +67,10 @@ export const api = createApi({
   }),
 })
 
-export const { useGetRolloutsQuery, useGetBatchesByRolloutQuery, useGetBatchDevicesQuery } = api
+export const {
+  useGetRolloutsQuery,
+  useGetRolloutByIdQuery,
+  useGetBatchesByRolloutQuery,
+  useGetBatchByIdQuery,
+  useGetBatchDevicesQuery,
+} = api
