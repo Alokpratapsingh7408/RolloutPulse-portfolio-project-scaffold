@@ -12,11 +12,11 @@
 ## 2. Environment variables
 
 ```
-# .env (frontend, committed as .env.example with blanks)
+# frontend/.env (committed as frontend/.env.example with blanks)
 VITE_SUPABASE_URL=
 VITE_SUPABASE_ANON_KEY=
 
-# .env (scripts only, never committed, not even as .example with a real shape beyond the name)
+# backend/.env (scripts only, never committed, not even as .example with a real shape beyond the name)
 SUPABASE_SERVICE_ROLE_KEY=
 ```
 
@@ -31,10 +31,13 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
-        with: { node-version: 20, cache: npm }
+        with: { node-version: 20, cache: npm, cache-dependency-path: frontend/package-lock.json }
       - run: npm ci
       - run: npm run lint
       - run: npm test -- --ci

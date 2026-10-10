@@ -55,7 +55,7 @@ Every component below gets a one-line prop table and its accessibility behavior 
 ## 6. Folder structure (frontend-specific detail on top of `DESIGN.md`'s repo layout)
 
 ```
-src/
+frontend/src/
 ├── components/
 │   ├── Button.tsx
 │   ├── StatusPill.tsx

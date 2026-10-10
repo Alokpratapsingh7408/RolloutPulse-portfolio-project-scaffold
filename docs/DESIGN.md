@@ -72,22 +72,30 @@ No deep nesting beyond 3 levels — keeps routing and breadcrumbs simple.
 
 ## 6. Repo layout
 
+Split into `frontend/` (the Vite app) and `backend/` (Supabase migrations, seed, and the simulation script) for a clearer monorepo boundary. Supabase itself is still the managed backend (Postgres + Realtime + Auth + RLS) — `backend/` just holds the SQL/scripts that configure and drive it, not a running server.
+
 ```
 rollout-pulse/
 ├── docs/                     # this folder
-├── supabase/
-│   ├── migrations/           # SQL migration files (Supabase CLI)
-│   └── seed.sql              # or seed.ts
-├── scripts/
-│   └── simulate-rollout.ts
-├── src/
-│   ├── components/           # shared component library
-│   ├── pages/
-│   ├── hooks/
-│   ├── store/                # Redux store + RTK Query api slice
-│   ├── lib/supabase.ts        # Supabase client singleton
-│   └── types/                 # generated + hand-written types
+├── backend/
+│   ├── supabase/
+│   │   ├── migrations/       # SQL migration files (Supabase CLI)
+│   │   └── seed.sql          # or seed.ts
+│   └── scripts/
+│       └── simulate-rollout.ts
+├── frontend/
+│   ├── src/
+│   │   ├── components/       # shared component library
+│   │   ├── pages/
+│   │   ├── hooks/
+│   │   ├── store/            # Redux store + RTK Query api slice
+│   │   ├── lib/supabase.ts    # Supabase client singleton
+│   │   └── types/             # generated + hand-written types
+│   ├── public/
+│   ├── index.html
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── .env.example
 ├── .github/workflows/ci.yml
-├── .env.example
 └── README.md
 ```
