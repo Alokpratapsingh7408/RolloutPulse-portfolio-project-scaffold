@@ -11,4 +11,5 @@ Shared, reusable components in `src/components/`. Spec: `docs/FRONTEND.md` §2.
 | `Skeleton` | `rows` | `aria-hidden="true"` (decorative placeholder) |
 | `Modal` | `isOpen`, `onClose`, `title`, `children` | Focus trap, `Esc` closes, focus returns to the trigger on close |
 | `FilterBar` | `statusFilter`, `searchValue`, `onChange` | Labeled inputs (`<label for>`), search debounced 300ms |
-| `DataTable<T>` | `columns`, `rows`, `rowKey`, `onSort?`, `isLoading?` | `<th scope="col">`, sortable headers are real `<button>`s; stacked card layout below `md` |
+| `DataTable<T>` | `columns`, `rows`, `rowKey`, `onSort?` (`(key, direction)` - DataTable owns the toggle), `onRowClick?`, `isLoading?` | `<th scope="col">`, sortable headers are real `<button>`s; rows with `onRowClick` are keyboard-focusable (Enter/Space activate); stacked card layout below `md` |
+| `AppHeader` | `breadcrumb?` (ReactNode) | Persistent nav: logo/wordmark link to `/`, optional breadcrumb trail (hidden below `sm`), Sign out |
