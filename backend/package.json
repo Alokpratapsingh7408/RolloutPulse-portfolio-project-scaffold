@@ -1,0 +1,13 @@
+{
+  "name": "rollout-pulse-backend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "scripts": {
+    "db:push": "supabase db push",
+    "migration:new": "supabase migration new"
+  },
+  "devDependencies": {
+    "supabase": "^2.120.0"
+  }
+}
