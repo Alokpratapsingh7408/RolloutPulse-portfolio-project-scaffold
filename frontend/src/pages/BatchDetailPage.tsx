@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { useRealtimeBatchDevices } from '../hooks/useRealtimeBatchDevices'
 import { DataTable } from '../components/DataTable'
 import type { DataTableColumn } from '../components/DataTable'
 import { FilterBar } from '../components/FilterBar'
@@ -15,6 +16,7 @@ type SortKey = 'serial' | 'model' | 'region' | 'status' | 'updated_at'
 export function BatchDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { data: batchDevices, isLoading, isError } = useGetBatchDevicesQuery(id ?? '')
+  useRealtimeBatchDevices(id ?? '')
 
   const [filter, setFilter] = useState<FilterBarValue>({ statusFilter: 'all', searchValue: '' })
   const [sort, setSort] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({
