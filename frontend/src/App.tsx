@@ -1,8 +1,23 @@
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { ProtectedRoute } from './components/ProtectedRoute'
+import { BatchDetailPage } from './pages/BatchDetailPage'
+import { DashboardPage } from './pages/DashboardPage'
+import { LoginPage } from './pages/LoginPage'
+import { RolloutDetailPage } from './pages/RolloutDetailPage'
+
 function App() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-white">
-      <h1 className="text-3xl font-semibold text-gray-900">RolloutPulse</h1>
-    </main>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route element={<ProtectedRoute />}>
+          <Route path="/" element={<DashboardPage />} />
+          <Route path="/rollouts/:id" element={<RolloutDetailPage />} />
+          <Route path="/batches/:id" element={<BatchDetailPage />} />
+        </Route>
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
   )
 }
 

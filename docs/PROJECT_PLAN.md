@@ -106,7 +106,7 @@ rollout_events                          -- optional audit log, powers an activit
 ### 2.3 Realtime
 
 - Frontend subscribes to Postgres changes on `batch_devices` filtered by `batch_id`, and on `batches` (for the top-level progress bar), using `supabase.channel(...).on('postgres_changes', ...)`.
-- A small **simulation script** (`scripts/simulate-rollout.ts`, run locally with `ts-node`) walks a batch's `batch_devices` rows from `pending` → `in_progress` → `success`/`failed` on a random delay (roughly 90% success / 10% failed), writing to `rollout_events` on each change. This is what makes the realtime UI update live during a demo — be upfront in the README that it's a simulator, not a real update mechanism.
+- A small **simulation script** (`backend/scripts/simulate-rollout.ts`, run locally with `npx tsx`) walks a batch's `batch_devices` rows from `pending` → `in_progress` → `success`/`failed` on a random delay (roughly 90% success / 10% failed), writing to `rollout_events` on each change. This is what makes the realtime UI update live during a demo — be upfront in the README that it's a simulator, not a real update mechanism.
 
 ### 2.4 Seed data
 

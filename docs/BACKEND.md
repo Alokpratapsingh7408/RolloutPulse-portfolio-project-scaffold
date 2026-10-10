@@ -129,4 +129,4 @@ for each batch in that rollout, ordered by sequence_order:
 mark rollout.status = 'completed'
 ```
 
-Run with `ts-node scripts/simulate-rollout.ts` in a second terminal while the app is open — that's your live demo. State plainly in the README that this is a simulator standing in for a real device/agent reporting status back.
+Run with `npx tsx scripts/simulate-rollout.ts` (from `backend/`) in a second terminal while the app is open — that's your live demo. State plainly in the README that this is a simulator standing in for a real device/agent reporting status back.
