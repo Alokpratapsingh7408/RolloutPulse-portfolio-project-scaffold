@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { useRealtimeBatchDevices } from '../hooks/useRealtimeBatchDevices'
 import { DataTable } from '../components/DataTable'
@@ -16,7 +16,26 @@ type SortKey = 'serial' | 'model' | 'region' | 'status' | 'updated_at'
 export function BatchDetailPage() {
   const { id } = useParams<{ id: string }>()
   const { data: batchDevices, isLoading, isError } = useGetBatchDevicesQuery(id ?? '')
-  useRealtimeBatchDevices(id ?? '')
+
+  // Count realtime updates and flush a single aria-live announcement at most
+  // once a second, rather than announcing every individual status change -
+  // with hundreds of devices updating in quick succession, reading each one
+  // out would bury a screen-reader user in noise.
+  const [announcement, setAnnouncement] = useState('')
+  const pendingCountRef = useRef(0)
+  useRealtimeBatchDevices(id ?? '', () => {
+    pendingCountRef.current += 1
+  })
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const count = pendingCountRef.current
+      if (count > 0) {
+        pendingCountRef.current = 0
+        setAnnouncement(`${count} device${count === 1 ? '' : 's'} updated`)
+      }
+    }, 1000)
+    return () => clearInterval(interval)
+  }, [])
 
   const [filter, setFilter] = useState<FilterBarValue>({ statusFilter: 'all', searchValue: '' })
   const [sort, setSort] = useState<{ key: SortKey; direction: 'asc' | 'desc' }>({
@@ -72,6 +91,10 @@ export function BatchDetailPage() {
   return (
     <main className="mx-auto max-w-4xl p-6">
       <h1 className="mb-4 text-2xl font-semibold text-gray-900">Devices</h1>
+
+      <div role="status" aria-live="polite" className="sr-only">
+        {announcement}
+      </div>
 
       <div className="mb-4">
         <FilterBar

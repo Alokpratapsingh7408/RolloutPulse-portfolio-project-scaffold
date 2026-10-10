@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAppDispatch } from '../store/hooks'
 import { api } from '../store/api'
@@ -6,8 +6,15 @@ import type { Database } from '../types/database'
 
 type BatchDeviceRow = Database['public']['Tables']['batch_devices']['Row']
 
-export function useRealtimeBatchDevices(batchId: string) {
+export function useRealtimeBatchDevices(batchId: string, onChange?: (row: BatchDeviceRow) => void) {
   const dispatch = useAppDispatch()
+
+  // Keep the latest onChange in a ref so the subscription effect below only
+  // ever needs to re-run when batchId/dispatch change, not on every render.
+  const onChangeRef = useRef(onChange)
+  useEffect(() => {
+    onChangeRef.current = onChange
+  })
 
   useEffect(() => {
     const channel = supabase
@@ -23,6 +30,7 @@ export function useRealtimeBatchDevices(batchId: string) {
               if (row) row.status = updated.status
             }),
           )
+          onChangeRef.current?.(updated)
         },
       )
       .subscribe()

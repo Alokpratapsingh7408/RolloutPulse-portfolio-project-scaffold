@@ -50,7 +50,19 @@ export function DataTable<T>({ columns, rows, rowKey, onSort, onRowClick, isLoad
             <tr
               key={rowKey(row)}
               onClick={onRowClick ? () => onRowClick(row) : undefined}
-              className={`border-b border-gray-100 ${onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
+              onKeyDown={
+                onRowClick
+                  ? (e) => {
+                      if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault()
+                        onRowClick(row)
+                      }
+                    }
+                  : undefined
+              }
+              tabIndex={onRowClick ? 0 : undefined}
+              aria-label={onRowClick ? 'View details' : undefined}
+              className={`border-b border-gray-100 ${onRowClick ? 'cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500' : ''}`}
             >
               {columns.map((column) => (
                 <td key={column.key} className="py-2 pr-4">
@@ -68,7 +80,19 @@ export function DataTable<T>({ columns, rows, rowKey, onSort, onRowClick, isLoad
           <li
             key={rowKey(row)}
             onClick={onRowClick ? () => onRowClick(row) : undefined}
-            className={`rounded border border-gray-200 p-3 ${onRowClick ? 'cursor-pointer hover:bg-gray-50' : ''}`}
+            onKeyDown={
+              onRowClick
+                ? (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      onRowClick(row)
+                    }
+                  }
+                : undefined
+            }
+            tabIndex={onRowClick ? 0 : undefined}
+            role={onRowClick ? 'button' : undefined}
+            className={`rounded border border-gray-200 p-3 ${onRowClick ? 'cursor-pointer hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500' : ''}`}
           >
             {columns.map((column) => (
               <div key={column.key} className="flex justify-between gap-4 py-0.5 text-sm">
