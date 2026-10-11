@@ -4,20 +4,6 @@ A realtime dashboard for monitoring progressive software rollouts across a devic
 
 **Live demo:** not yet deployed — see [docs/DEPLOYMENT.md](./docs/DEPLOYMENT.md) for the planned Vercel/Supabase setup.
 
-## Screenshots
-
-**Dashboard** — rollout list with live overall progress:
-
-![Dashboard](./docs/screenshots/dashboard.png)
-
-**Rollout detail** — batches progressing in sequence, live:
-
-![Rollout detail](./docs/screenshots/rollout-detail.png)
-
-**Batch detail** — device table, filterable, updating live as the simulator runs:
-
-![Batch detail](./docs/screenshots/batch-detail.png)
-
 ## Architecture
 
 ```
