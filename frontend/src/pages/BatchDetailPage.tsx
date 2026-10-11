@@ -7,6 +7,7 @@ import type { DataTableColumn } from '../components/DataTable'
 import { FilterBar } from '../components/FilterBar'
 import type { FilterBarValue } from '../components/FilterBar'
 import { Modal } from '../components/Modal'
+import { StatTile } from '../components/StatTile'
 import { StatusPill } from '../components/StatusPill'
 import type { Status } from '../components/StatusPill'
 import { useGetBatchByIdQuery, useGetBatchDevicesQuery, useGetRolloutByIdQuery } from '../store/api'
@@ -187,15 +188,6 @@ export function BatchDetailPage() {
           )}
         </Modal>
       </main>
-    </div>
-  )
-}
-
-function StatTile({ label, value, tone }: { label: string; value: number; tone: string }) {
-  return (
-    <div className="rounded-xl border border-slate-200 bg-white p-3 shadow-sm">
-      <p className="text-xs font-medium text-slate-600">{label}</p>
-      <p className={`mt-0.5 text-xl font-bold tabular-nums ${tone}`}>{value}</p>
     </div>
   )
 }
