@@ -1,15 +1,15 @@
 # RolloutPulse — Project Plan & Requirements
 
-> **How to talk about this project — read this before building, not after.**
-> Publicly (GitHub repo name/description, README, resume bullet, and anything you say unprompted in an interview), this is a **"Progressive Rollout / Canary Release Monitor"** — a generic, well-known engineering pattern, not a copy of anyone's internal product. Never write or say "DLCM," "Embitel," "Volkswagen," or "vehicle fleet" anywhere public. The *why Embitel* reasoning below is private planning context for you and me only.
+> **How to talk about this project.**
+> This is a **"Progressive Rollout / Canary Release Monitor"** — a generic, well-known engineering pattern, not a copy of anyone's internal product. It's an independent personal project: not built for, commissioned by, or affiliated with any employer or company, past or present.
 >
-> If asked in an interview why you built it: "I wanted to get better at realtime dashboards with Supabase, and progressive rollout monitoring is a pattern I find interesting." That's true, and it costs you nothing. The one line you must never cross: never say a past employer or named client commissioned this — it didn't, it's your own project, and that's a completely normal thing to have.
+> If asked in an interview why you built it: "I wanted to get better at realtime dashboards with Supabase, and progressive rollout monitoring is a pattern I find interesting." That's true, and it costs you nothing.
 >
 > **Terminology note:** the top-level entity is called a **rollout** (not "campaign") throughout — "campaign" leans toward marketing/OTA-update jargon, "rollout" is the standard term in progressive-delivery/canary-release tooling (Argo Rollouts, feature-flag platforms). Keep this consistent in code, variable names, and conversation.
 
 **What it is:** a realtime dashboard for monitoring progressive software rollouts across a fleet of devices — a rollout is broken into batches, batches contain devices, and each device's update status (pending → in progress → success/failed) updates live on screen without a page refresh.
 
-**Why this project, for this role (private note):** Embitel's DLCM Control Center plans and monitors large-scale software rollout campaigns across a vehicle fleet — campaign creation, batch planning, rollout steering, live status monitoring. This project is the same *shape* of problem (rollouts → batches → live status), built with your real stack (React, TypeScript, Redux Toolkit, Supabase Realtime), as your own independent project — not a copy of anyone's internal system, and not claiming to be built for any company.
+**Why this project:** progressive rollout monitoring (rollouts → batches → live status) is a pattern I find professionally interesting, and a good excuse to get real, non-trivial practice with the actual stack I use — React, TypeScript, Redux Toolkit, and Supabase Realtime.
 
 **Ground rule:** every requirement below only goes on your resume/in an interview once it's actually built and you've run it yourself. Nothing here is a resume bullet yet — it's a build spec.
 

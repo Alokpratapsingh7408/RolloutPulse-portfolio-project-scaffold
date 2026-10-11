@@ -57,4 +57,4 @@ jobs:
 - [ ] Screenshot or short GIF of the live status updates in action.
 - [ ] Setup instructions (clone, `npm install`, env vars, `supabase db push`, `npm run dev`).
 - [ ] "What I'd do with more time" section — burst-handling for realtime, e2e tests, multi-tenant orgs. Mirrors the explicit scope calls in `TESTING.md`/`SECURITY.md`.
-- [ ] No mention of Embitel/DLCM/VW anywhere in this file, ever.
+- [ ] No mention of any past employer, client, or their products anywhere in this file, ever — this is an independent personal project (see the framing note in `PROJECT_PLAN.md`).
